@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbgc.mapper.QuestionnaireMapper">
+    <resultMap id="BaseResultMap" type="com.hbgc.domain.Questionnaire">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="deadline" property="deadline"/>
+        <result column="description" property="description"/>
+        <result column="cover_img" property="coverImg"/>
+        <result column="flag" property="flag"/>
+        <result column="start_time" property="startTime"/>
+        <result column="title" property="title"/>
+        <association property="creator" javaType="com.hbgc.domain.User">
+            <id column="user_id" property="id"/>
+            <result column="user_name" property="userName"/>
+            <result column="phone_num" property="phoneNum"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <collection property="topicList" ofType="com.hbgc.domain.Topic">
+            <id column="topic_id" property="id"/>
+            <result column="topic_title" property="title"/>
+            <collection property="optionList" ofType="com.hbgc.domain.TopicOption">
+                <id column="topic_option_id" property="id"/>
+                <result column="content" property="content"/>
+                <result column="choice_num" property="choiceNum"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    questionnaire.*,user.id as user_id,user.user_name,user.phone_num,user.avatar,topic.id as topic_id,topic.title as topic_title,topic_option.id as topic_option_id,topic_option.content,topic_option.choice_num
+  </sql>
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from questionnaire,user,topic,topic_option
+        where questionnaire.id=#{querId,jdbcType=INTEGER} and creator_id=user.id and topic.questionnaire_id=questionnaire.id and topic_option.topic_id=topic.id
+    </select>
+
+</mapper>

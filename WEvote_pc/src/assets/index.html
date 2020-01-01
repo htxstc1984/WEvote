@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue.js登录注册切换</title>
+
+
+    <link rel='stylesheet' href='css/bootstrap.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <div id="app" class="base">
+        <div v-if="signUp">
+            <div class="aim">
+                <h2>Hello mate!</h2>
+                <h6>Enter your personal details and start journey with me</h6>
+                <button @click="signUp = !signUp" class="btn ">Sign in</button>
+            </div>
+            <div class="formArea">
+                <h2>Sing in to Remat</h2>
+                <h6>Fill in the required fields</h6>
+
+                <div class="form-group">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button class="btn">Sign up</button>
+
+            </div>
+        </div>
+
+        <div v-else>
+            <div class="aim in">
+                <h2>Welcome back!</h2>
+                <h6>To keep connected with me, please login with your personal infos</h6>
+                <button @click="signUp = !signUp" class="btn">Sign up</button>
+            </div>
+            <div class="formArea in">
+                <h2>Create an account</h2>
+                <h6>Fill in the required fields</h6>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button class="btn">Sign in</button>
+            </div>
+
+        </div>
+    </div>
+    <script src='js/vue.js'></script>
+
+    <script src="js/index.js"></script>
+
+    <!--这行代码可以删除-->
+    <a style="display:none" href="http://www.bootstrapmb.com">bootstrap模板库</a>
+
+</body>
+</html>

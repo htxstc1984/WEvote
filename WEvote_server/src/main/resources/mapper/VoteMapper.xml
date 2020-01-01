@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbgc.mapper.VoteMapper">
+    <resultMap id="BaseResultMap" type="com.hbgc.domain.Vote">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="deadline" property="deadline"/>
+        <result column="description" property="description"/>
+        <result column="description_img" property="descriptionImg"/>
+        <result column="once_max_vote" property="onceMaxVote"/>
+        <result column="share_img" property="shareImg"/>
+        <result column="flag" property="flag"/>
+        <result column="start_time" property="startTime"/>
+        <result column="title" property="title"/>
+        <association property="creator" javaType="com.hbgc.domain.User">
+            <id column="user_id" property="id"/>
+            <result column="create_time" property="createTime"/>
+            <result column="modify_time" property="modifyTime"/>
+            <result column="user_name" property="userName"/>
+            <result column="phone_num" property="phoneNum"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.hbgc.domain.Vote">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="deadline" property="deadline"/>
+        <result column="description" property="description"/>
+        <result column="description_img" property="descriptionImg"/>
+        <result column="once_max_vote" property="onceMaxVote"/>
+        <result column="share_img" property="shareImg"/>
+        <result column="flag" property="flag"/>
+        <result column="start_time" property="startTime"/>
+        <result column="title" property="title"/>
+        <collection property="voter" ofType="com.hbgc.domain.User">
+            <id column="user_id" property="id"/>
+            <result column="create_time" property="createTime"/>
+            <result column="modify_time" property="modifyTime"/>
+            <result column="user_name" property="userName"/>
+            <result column="phone_num" property="phoneNum"/>
+            <result column="avatar" property="avatar"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    vote.*,user.id as user_id,user.create_time,user.modify_time,user.user_name,user.phone_num,user.avatar
+  </sql>
+    <select id="findByCreatorId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from vote,user
+        where creator_id=#{creatorId,jdbcType=INTEGER} and creator_id=user.id
+    </select>
+    <select id="findByCreatorId2" parameterType="java.lang.Integer" resultMap="BaseResultMap2">
+        select <include refid="Base_Column_List"></include>
+        from vote,voter,user
+        where creator_id=#{creatorId,jdbcType=INTEGER} and vote.id=voter.vid and voter.uid=user.id
+    </select>
+
+    <select id="findCreatorIdByVoteId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    creator_id
+    from vote
+    where id=#{voteId,jdbcType=INTEGER}
+  </select>
+
+
+    <select id="findVoteById">
+
+    </select>
+</mapper>
